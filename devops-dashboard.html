@@ -642,6 +642,7 @@
                 <div class="card-header">
                     <h3><span class="status-dot warning"></span>Cost Analysis</h3>
                     <div class="card-actions">
+			<div class="icon-btn" onclick="openCostCalculator()"><i class="fas fa-calculator"></i></div>
                         <div class="icon-btn" onclick="downloadCostReport()"><i class="fas fa-download"></i></div>
                         <div class="icon-btn" onclick="optimizeCosts()"><i class="fas fa-chart-line"></i></div>
                     </div>
@@ -804,6 +805,20 @@
     </div>
 
     <script>
+
+	// Pipeline navigation functions
+	function navigateToPlan() {
+   	 window.open('https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/02-migration-strategy', '_blank');
+	}
+
+	function navigateToDeploy() {
+   	 showDeploymentSummary();
+	}
+
+	// Cost calculator function
+	function openCostCalculator() {
+   	 window.open('cost-calculator.html', '_blank');
+	}
         // Navigation functions for cloud providers
         function navigateToAWS() {
             window.open('https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/03-aws-deployment', '_blank');
