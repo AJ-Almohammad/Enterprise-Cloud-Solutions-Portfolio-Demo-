@@ -1,0 +1,128 @@
+Folder PATH listing for volume Windows
+Volume serial number is 46E0-E342
+C:.
+|   .gitignore
+|   ProjectFolderTree.txt
+|   README.md
+|   
++---01-legacy-assessment
+|   |   legacy-assessment-summary.md
+|   |   
+|   +---cost-analysis
+|   +---current-state-analysis
+|   |   \---legacy-ecommerce-app
+|   |           package.json
+|   |           server.js
+|   |           
+|   +---performance-baseline
+|   +---security-audit
+|   \---technical-debt-evaluation
++---02-migration-strategy
+|   |   migration-strategy-summary.md
+|   |   
+|   +---business-case
+|   |       business-case-analysis.md
+|   |       
+|   +---risk-assessment
+|   |       risk-matrix-analysis.md
+|   |       
+|   +---stakeholder-communication
+|   |       communication-plan.md
+|   |       
+|   +---technical-strategy
+|   |       technical-migration-strategy.md
+|   |       
+|   \---timeline-planning
+|           migration-timeline.md
+|           
++---03-aws-deployment
+|   |   aws-deployment-summary.md
+|   |   
+|   +---auto-scaling
+|   |       auto-scaling-group.tf
+|   |       
+|   +---compute-services
+|   |       ec2-instances.tf
+|   |       
+|   +---database-services
+|   |       rds-postgresql.tf
+|   |       
+|   +---load-balancing
+|   |       application-load-balancer.tf
+|   |       
+|   +---security-groups
+|   |       security-groups.tf
+|   |       
+|   +---storage-solutions
+|   |       s3-buckets.tf
+|   |       
+|   \---vpc-networking
+|           vpc-configuration.tf
+|           
++---04-azure-deployment
+|   |   azure-deployment-summary.md
+|   |   
+|   +---app-services
+|   |       app-service.tf
+|   |       
+|   +---application-gateway
+|   |       main.tf
+|   |       
+|   +---azure-ad-integration
+|   |       main.tf
+|   |       
+|   +---cosmos-db
+|   |       cosmos-db.tf
+|   |       
+|   +---key-vault
+|   |       key-vault.tf
+|   |       
+|   +---resource-groups
+|   |       resource-groups.tf
+|   |       
+|   +---storage-accounts
+|   |       storage-accounts.tf
+|   |       
+|   \---virtual-networks
+|           azure-vnet.tf
+|           
++---05-gcp-deployment
+|   +---bigquery-analytics
+|   |       main.tf
+|   |       
+|   +---cloud-functions
+|   |       main.tf
+|   |       
+|   +---cloud-sql
+|   |       main.tf
+|   |       
+|   +---cloud-storage
+|   |       main.tf
+|   |       
+|   +---compute-engine
+|   |       main.tf
+|   |       
+|   +---kubernetes-engine
+|   |       main.tf
+|   |       
+|   \---vpc-networks
+|           main.tf
+|           
++---06-infrastructure-as-code
++---07-application-development
++---08-devops-pipeline
++---09-data-analytics
++---10-machine-learning
++---11-networking-solutions
++---12-security-implementation
++---13-storage-architecture
++---14-containerization
++---15-serverless-solutions
++---16-migration-execution
++---17-it-transformation
++---18-customer-engagement
++---19-poc-mvp-development
++---20-business-strategy
++---21-certifications-prep
++---22-documentation
+\---23-portfolio-materials
