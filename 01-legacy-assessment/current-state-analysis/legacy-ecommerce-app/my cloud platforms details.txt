@@ -1,0 +1,48 @@
+#Cloud Platforms Details
+#AWS Details
+UserFolderPath> aws configure list
+      Name                    Value             Type    Location
+      ----                    -----             ----    --------
+   profile                <not set>             None    None
+access_key     ******************** shared-credentials-file
+secret_key     ******************** shared-credentials-file
+    region             <your-region>      config-file    ~/.aws/config
+
+UserFolderPath> aws sts get-caller-identity
+{
+    "UserId": "********************",
+    "Account": "************",
+    "Arn": "arn:aws:iam::************:user/********"
+}
+
+#Azure Details
+
+Azure Subscription ID: ********************
+
+Azure Tenant ID: ********************
+
+Primary Azure AD Object ID: ********************
+
+Additional Azure AD Object IDs: (none for now)
+
+Preferred Main Azure Region: <your-main-region>
+
+Preferred Backup/DR Azure Region: <your-backup-region>
+
+App Services Managed Identity Type: SystemAssigned
+
+Custom Domain / CNAME: No
+
+Azure Key Vault Access
+
+Users/apps: ******************** (self)
+
+#GCP Details
+
+GCP Project ID: ********************
+
+GCP Billing Status: Not linked
+
+Default GCP Region: <your-region>
+
+Primary GCP Service Account Email: ********************
