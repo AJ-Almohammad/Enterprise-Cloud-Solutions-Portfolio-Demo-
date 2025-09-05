@@ -1,0 +1,14 @@
+# Enterprise Cloud Solutions Portfolio
+*.log
+.env*
+node_modules/
+.terraform/
+*.tfstate*
+.terraform.lock.hcl
+.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+*-credentials.json
+*.pem
+*.key
