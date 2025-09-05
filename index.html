@@ -1,14 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudMigrate Pro - Multi-Cloud Solutions Architecture</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; }
-        .cloud-status { display: flex; justify-content: space-around; margin: 30px 0; }
-        .cloud-box { background: #e8f4fd; padding: 20px; border-radius: 8px; text-align: center; flex: 1; margin: 0 10px; }
-        .complete { background: #d4edda; }
-        .github-link { background: #0366d6; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 20px 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: rgba(255,255,255,0.95); 
+            padding: 50px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        h1 { 
+            font-size: 2.5rem; 
+            color: #2c3e50; 
+            margin-bottom: 10px; 
+            text-align: center;
+            font-weight: 700;
+        }
+        h2 { 
+            font-size: 1.3rem; 
+            color: #7f8c8d; 
+            text-align: center; 
+            margin-bottom: 40px; 
+            font-weight: 400;
+        }
+        .cloud-status { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            margin: 40px 0; 
+        }
+        .cloud-box { 
+            background: linear-gradient(145deg, #e8f4fd, #f0f8ff); 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .cloud-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .complete { 
+            background: linear-gradient(145deg, #d4edda, #e8f5e8); 
+        }
+        .cloud-box h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .cloud-box p {
+            margin: 8px 0;
+            color: #34495e;
+            font-weight: 500;
+        }
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .github-link { 
+            background: linear-gradient(45deg, #0366d6, #0256cc); 
+            color: white; 
+            padding: 15px 30px; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(3, 102, 214, 0.3);
+        }
+        .github-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(3, 102, 214, 0.4);
+        }
+        .dashboard-link {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        .dashboard-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+        .highlights {
+            background: rgba(248, 249, 250, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        .highlights h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        .highlights ul {
+            list-style: none;
+        }
+        .highlights li {
+            padding: 10px 0;
+            color: #34495e;
+            position: relative;
+            padding-left: 25px;
+        }
+        .highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.1rem; }
+            .buttons-container { flex-direction: column; align-items: center; }
+        }
     </style>
 </head>
 <body>
@@ -34,15 +166,24 @@
             </div>
         </div>
         
-        <a href="https://github.com/AJ-Almohammad/enterprise-cloud-solutions-portfolio" class="github-link">View Project on GitHub</a>
+        <div class="buttons-container">
+            <a href="devops-dashboard.html" class="dashboard-link">
+                🚀 Interactive Dashboard
+            </a>
+            <a href="https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-" class="github-link">
+                📂 View Project on GitHub
+            </a>
+        </div>
         
-        <h3>Portfolio Highlights</h3>
-        <ul>
-            <li>Real multi-cloud infrastructure deployment</li>
-            <li>23-phase comprehensive migration strategy</li>
-            <li>Working auto-scaling and load balancing</li>
-            <li>Production-ready security configurations</li>
-        </ul>
+        <div class="highlights">
+            <h3>Portfolio Highlights</h3>
+            <ul>
+                <li>Real multi-cloud infrastructure deployment</li>
+                <li>23-phase comprehensive migration strategy</li>
+                <li>Working auto-scaling and load balancing</li>
+                <li>Production-ready security configurations</li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
