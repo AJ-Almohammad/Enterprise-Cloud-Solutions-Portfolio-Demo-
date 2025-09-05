@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Cloud Cost Calculator - CloudMigrate Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --aws: #ff9900;
+            --azure: #0078d4;
+            --gcp: #4285f4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--dark-bg); 
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .calculator { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        
+        .header { 
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .header h1 { 
+            font-size: 2.5rem; 
+            margin-bottom: 10px; 
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .input-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .results-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--card-border);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        .cloud-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .aws-section { background: rgba(255, 153, 0, 0.1); border-color: var(--aws); }
+        .azure-section { background: rgba(0, 120, 212, 0.1); border-color: var(--azure); }
+        .gcp-section { background: rgba(66, 133, 244, 0.1); border-color: var(--gcp); }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        input, select {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+        
+        .cost-breakdown {
+            margin-bottom: 20px;
+        }
+        
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .cost-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .total-section {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--secondary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .total-amount {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin: 10px 0;
+        }
+        
+        .comparison-chart {
+            margin-top: 20px;
+        }
+        
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .chart-label {
+            width: 60px;
+            font-size: 0.9rem;
+        }
+        
+        .chart-progress {
+            flex: 1;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+        
+        .chart-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .aws-fill { background: var(--aws); }
+        .azure-fill { background: var(--azure); }
+        .gcp-fill { background: var(--gcp); }
+        
+        .chart-value {
+            width: 80px;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .preset-configs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .preset-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--card-border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .preset-btn:hover {
+            background: var(--primary);
+        }
+        
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .results-section {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="header">
+            <h1>Multi-Cloud Cost Calculator</h1>
+            <p>Compare infrastructure costs across AWS, Azure, and GCP based on real deployment data</p>
+            <div class="preset-configs">
+                <button class="preset-btn" onclick="loadPreset('small')">Small Setup</button>
+                <button class="preset-btn" onclick="loadPreset('current')">Current Portfolio</button>
+                <button class="preset-btn" onclick="loadPreset('enterprise')">Enterprise Scale</button>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="input-section">
+                <!-- AWS Section -->
+                <div class="cloud-section aws-section">
+                    <div class="section-header">
+                        <i class="fab fa-aws fa-2x" style="color: var(--aws);"></i>
+                        <h3>Amazon Web Services (AWS)</h3>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label>EC2 Instances</label>
+                            <select id="aws-ec2-type" onchange="calculateCosts()">
+                                <option value="t3.micro">t3.micro (1 vCPU, 1GB)</option>
+                                <option value="t3.small">t3.small (2 vCPU, 2GB)</option>
+                                <option value="t3.medium">t3.medium (2 vCPU, 4GB)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Instance Count</label>
+                            <input type="number" id="aws-ec2-count" value="3" min="1" max="20" onchange="calculateCosts()">
+                        </div>
+                        <div class="form-group">
+                            <label>RDS Instance</label>
+                            <select id="aws-rds-type" onchange="calculateCosts()">
+                                <option value="db.t3.micro">db.t3.micro</option>
+                                <option value="db.t3.small">db.t3.small</option>
+                                <option value="db.t3.medium">db.t3.medium</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Storage (GB)</label>
+                            <input type="number" id="aws-storage" value="50" min="20" max="1000" onchange="calculateCosts()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Azure Section -->
+                <div class="cloud-section azure-section">
+                    <div class="section-header">
+                        <i class="fab fa-microsoft fa-2x" style="color: var(--azure);"></i>
+                        <h3>Microsoft Azure</h3>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label>VM Instances</label>
+                            <select id="azure-vm-type" onchange="calculateCosts()">
+                                <option value="B1s">B1s (1 vCPU, 1GB)</option>
+                                <option value="B1ms">B1ms (1 vCPU, 2GB)</option>
+                                <option value="B2s">B2s (2 vCPU, 4GB)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Instance Count</label>
+                            <input type="number" id="azure-vm-count" value="2" min="1" max="20" onchange="calculateCosts()">
+                        </div>
+                        <div class="form-group">
+                            <label>Cosmos DB</label>
+                            <select id="azure-db-type" onchange="calculateCosts()">
+                                <option value="basic">Basic (400 RU/s)</option>
+                                <option value="standard">Standard (1000 RU/s)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Storage (GB)</label>
+                            <input type="number" id="azure-storage" value="100" min="50" max="1000" onchange="calculateCosts()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GCP Section -->
+                <div class="cloud-section gcp-section">
+                    <div class="section-header">
+                        <i class="fab fa-google fa-2x" style="color: var(--gcp);"></i>
+                        <h3>Google Cloud Platform (GCP)</h3>
+                    </div>
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label>Compute Engine</label>
+                            <select id="gcp-vm-type" onchange="calculateCosts()">
+                                <option value="e2-micro">e2-micro (0.25 vCPU, 1GB)</option>
+                                <option value="e2-small">e2-small (0.5 vCPU, 2GB)</option>
+                                <option value="e2-medium">e2-medium (1 vCPU, 4GB)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Instance Count</label>
+                            <input type="number" id="gcp-vm-count" value="1" min="1" max="20" onchange="calculateCosts()">
+                        </div>
+                        <div class="form-group">
+                            <label>GKE Cluster</label>
+                            <select id="gcp-gke-type" onchange="calculateCosts()">
+                                <option value="standard">Standard (2 nodes)</option>
+                                <option value="autopilot">Autopilot</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Storage (GB)</label>
+                            <input type="number" id="gcp-storage" value="100" min="50" max="1000" onchange="calculateCosts()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h3>Cost Breakdown</h3>
+                <div class="cost-breakdown">
+                    <div class="cost-item">
+                        <span><i class="fab fa-aws" style="color: var(--aws);"></i> AWS</span>
+                        <span id="aws-total">$45.00</span>
+                    </div>
+                    <div class="cost-item">
+                        <span><i class="fab fa-microsoft" style="color: var(--azure);"></i> Azure</span>
+                        <span id="azure-total">$22.00</span>
+                    </div>
+                    <div class="cost-item">
+                        <span><i class="fab fa-google" style="color: var(--gcp);"></i> GCP</span>
+                        <span id="gcp-total">$35.00</span>
+                    </div>
+                    <div class="cost-item">
+                        <span><strong>Total Monthly Cost</strong></span>
+                        <span id="total-cost"><strong>$102.00</strong></span>
+                    </div>
+                </div>
+
+                <div class="comparison-chart">
+                    <h4>Cost Comparison</h4>
+                    <div class="chart-bar">
+                        <div class="chart-label">AWS</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill aws-fill" id="aws-bar" style="width: 44%;"></div>
+                        </div>
+                        <div class="chart-value" id="aws-percent">44%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Azure</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill azure-fill" id="azure-bar" style="width: 22%;"></div>
+                        </div>
+                        <div class="chart-value" id="azure-percent">22%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">GCP</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill gcp-fill" id="gcp-bar" style="width: 34%;"></div>
+                        </div>
+                        <div class="chart-value" id="gcp-percent">34%</div>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <h4>Estimated Monthly Total</h4>
+                    <div class="total-amount" id="grand-total">$102.00</div>
+                    <p>Based on current configuration</p>
+                </div>
+
+                <button class="btn" onclick="generateReport()" style="width: 100%; margin-top: 20px;">
+                    <i class="fas fa-download"></i> Generate Cost Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const pricing = {
+            aws: {
+                't3.micro': 8.5, 't3.small': 17, 't3.medium': 34,
+                'db.t3.micro': 12, 'db.t3.small': 24, 'db.t3.medium': 48,
+                storage: 0.10
+            },
+            azure: {
+                'B1s': 7.5, 'B1ms': 15, 'B2s': 30,
+                'basic': 25, 'standard': 65,
+                storage: 0.05
+            },
+            gcp: {
+                'e2-micro': 6, 'e2-small': 12, 'e2-medium': 25,
+                'standard': 145, 'autopilot': 85,
+                storage: 0.04
+            }
+        };
+
+        function calculateCosts() {
+            // AWS Calculations
+            const awsEc2Type = document.getElementById('aws-ec2-type').value;
+            const awsEc2Count = parseInt(document.getElementById('aws-ec2-count').value);
+            const awsRdsType = document.getElementById('aws-rds-type').value;
+            const awsStorage = parseInt(document.getElementById('aws-storage').value);
+            
+            const awsCost = (pricing.aws[awsEc2Type] * awsEc2Count) + pricing.aws[awsRdsType] + (awsStorage * pricing.aws.storage);
+
+            // Azure Calculations
+            const azureVmType = document.getElementById('azure-vm-type').value;
+            const azureVmCount = parseInt(document.getElementById('azure-vm-count').value);
+            const azureDbType = document.getElementById('azure-db-type').value;
+            const azureStorage = parseInt(document.getElementById('azure-storage').value);
+            
+            const azureCost = (pricing.azure[azureVmType] * azureVmCount) + pricing.azure[azureDbType] + (azureStorage * pricing.azure.storage);
+
+            // GCP Calculations
+            const gcpVmType = document.getElementById('gcp-vm-type').value;
+            const gcpVmCount = parseInt(document.getElementById('gcp-vm-count').value);
+            const gcpGkeType = document.getElementById('gcp-gke-type').value;
+            const gcpStorage = parseInt(document.getElementById('gcp-storage').value);
+            
+            const gcpCost = (pricing.gcp[gcpVmType] * gcpVmCount) + pricing.gcp[gcpGkeType] + (gcpStorage * pricing.gcp.storage);
+
+            const totalCost = awsCost + azureCost + gcpCost;
+
+            // Update display
+            document.getElementById('aws-total').textContent = `$${awsCost.toFixed(2)}`;
+            document.getElementById('azure-total').textContent = `$${azureCost.toFixed(2)}`;
+            document.getElementById('gcp-total').textContent = `$${gcpCost.toFixed(2)}`;
+            document.getElementById('total-cost').textContent = `$${totalCost.toFixed(2)}`;
+            document.getElementById('grand-total').textContent = `$${totalCost.toFixed(2)}`;
+
+            // Update chart
+            const awsPercent = Math.round((awsCost / totalCost) * 100);
+            const azurePercent = Math.round((azureCost / totalCost) * 100);
+            const gcpPercent = Math.round((gcpCost / totalCost) * 100);
+
+            document.getElementById('aws-bar').style.width = awsPercent + '%';
+            document.getElementById('azure-bar').style.width = azurePercent + '%';
+            document.getElementById('gcp-bar').style.width = gcpPercent + '%';
+
+            document.getElementById('aws-percent').textContent = awsPercent + '%';
+            document.getElementById('azure-percent').textContent = azurePercent + '%';
+            document.getElementById('gcp-percent').textContent = gcpPercent + '%';
+        }
+
+        function loadPreset(type) {
+            if (type === 'current') {
+                // Your actual portfolio configuration
+                document.getElementById('aws-ec2-type').value = 't3.micro';
+                document.getElementById('aws-ec2-count').value = '3';
+                document.getElementById('aws-rds-type').value = 'db.t3.micro';
+                document.getElementById('aws-storage').value = '50';
+                
+                document.getElementById('azure-vm-type').value = 'B1s';
+                document.getElementById('azure-vm-count').value = '2';
+                document.getElementById('azure-db-type').value = 'basic';
+                document.getElementById('azure-storage').value = '100';
+                
+                document.getElementById('gcp-vm-type').value = 'e2-micro';
+                document.getElementById('gcp-vm-count').value = '1';
+                document.getElementById('gcp-gke-type').value = 'standard';
+                document.getElementById('gcp-storage').value = '100';
+            }
+            calculateCosts();
+        }
+
+        function generateReport() {
+            window.open('https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/01-legacy-assessment/cost-analysis', '_blank');
+        }
+
+        // Initialize with current portfolio values
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPreset('current');
+        });
+    </script>
+</body>
+</html>
