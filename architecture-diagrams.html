@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Cloud Architecture Diagrams - CloudMigrate Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #10b981;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-primary: #f1f5f9;
+            --aws: #ff9900;
+            --azure: #0078d4;
+            --gcp: #4285f4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--dark-bg); 
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container { 
+            max-width: 1600px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .diagram-container {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cloud-provider {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cloud-provider:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .aws-provider {
+            border-color: var(--aws);
+            background: rgba(255, 153, 0, 0.1);
+        }
+
+        .azure-provider {
+            border-color: var(--azure);
+            background: rgba(0, 120, 212, 0.1);
+        }
+
+        .gcp-provider {
+            border-color: var(--gcp);
+            background: rgba(66, 133, 244, 0.1);
+        }
+
+        .provider-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .provider-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .service-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .service-box:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .service-box.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .connection-line.active {
+            opacity: 1;
+        }
+
+        .network-diagram {
+            position: relative;
+            height: 600px;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1), transparent);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 50%;
+            right: -400px;
+            transform: translateY(-50%);
+            width: 380px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-panel.open {
+            right: 20px;
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .info-panel {
+                position: fixed;
+                top: auto;
+                bottom: -100%;
+                right: 0;
+                left: 0;
+                width: auto;
+                height: 70vh;
+                transform: none;
+                border-radius: 16px 16px 0 0;
+            }
+            
+            .info-panel.open {
+                bottom: 0;
+                right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Multi-Cloud Architecture Diagrams</h1>
+            <p>Interactive visualization of CloudMigrate Pro infrastructure across AWS, Azure, and GCP</p>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('overview')">Infrastructure Overview</button>
+                <button class="tab" onclick="showTab('network')">Network Topology</button>
+                <button class="tab" onclick="showTab('security')">Security Architecture</button>
+                <button class="tab" onclick="showTab('data')">Data Flow</button>
+            </div>
+        </div>
+
+        <!-- Infrastructure Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="diagram-container">
+                <div class="network-diagram">
+                    <div class="cloud-provider aws-provider" onclick="showProviderDetails('aws')" style="position: absolute; top: 50px; left: 50px; width: 300px;">
+                        <div class="provider-header">
+                            <i class="fab fa-aws fa-2x" style="color: var(--aws);"></i>
+                            <h3>Amazon Web Services</h3>
+                            <span style="background: var(--secondary); padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">100% Complete</span>
+                        </div>
+                        <div class="services-grid">
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('ec2')">
+                                <i class="fas fa-server"></i>
+                                <div>EC2</div>
+                                <small>3 Instances</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('rds')">
+                                <i class="fas fa-database"></i>
+                                <div>RDS</div>
+                                <small>MySQL</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('s3')">
+                                <i class="fas fa-hdd"></i>
+                                <div>S3</div>
+                                <small>Storage</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('alb')">
+                                <i class="fas fa-balance-scale"></i>
+                                <div>ALB</div>
+                                <small>Load Balancer</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cloud-provider azure-provider" onclick="showProviderDetails('azure')" style="position: absolute; top: 50px; right: 50px; width: 300px;">
+                        <div class="provider-header">
+                            <i class="fab fa-microsoft fa-2x" style="color: var(--azure);"></i>
+                            <h3>Microsoft Azure</h3>
+                            <span style="background: var(--primary); padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">75% Complete</span>
+                        </div>
+                        <div class="services-grid">
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('cosmosdb')">
+                                <i class="fas fa-database"></i>
+                                <div>Cosmos DB</div>
+                                <small>NoSQL</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('storage')">
+                                <i class="fas fa-archive"></i>
+                                <div>Storage</div>
+                                <small>Blob</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('vnet')">
+                                <i class="fas fa-network-wired"></i>
+                                <div>VNet</div>
+                                <small>Network</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cloud-provider gcp-provider" onclick="showProviderDetails('gcp')" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); width: 300px;">
+                        <div class="provider-header">
+                            <i class="fab fa-google fa-2x" style="color: var(--gcp);"></i>
+                            <h3>Google Cloud Platform</h3>
+                            <span style="background: var(--secondary); padding: 4px 8px; border-radius: 12px; font-size: 0.8rem;">100% Complete</span>
+                        </div>
+                        <div class="services-grid">
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('gke')">
+                                <i class="fas fa-cubes"></i>
+                                <div>GKE</div>
+                                <small>2 Nodes</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('compute')">
+                                <i class="fas fa-server"></i>
+                                <div>Compute</div>
+                                <small>VM</small>
+                            </div>
+                            <div class="service-box" onclick="event.stopPropagation(); showServiceDetails('vpc')">
+                                <i class="fas fa-network-wired"></i>
+                                <div>VPC</div>
+                                <small>Network</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="connection-line" id="aws-azure" style="top: 200px; left: 350px; width: 200px;"></div>
+                    <div class="connection-line" id="azure-gcp" style="top: 300px; right: 250px; width: 150px; transform: rotate(45deg);"></div>
+                    <div class="connection-line" id="gcp-aws" style="bottom: 200px; left: 200px; width: 200px; transform: rotate(-45deg);"></div>
+                </div>
+
+                <div class="legend">
+                    <h4>Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--aws);"></div>
+                        <span>AWS Services</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--azure);"></div>
+                        <span>Azure Services</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--gcp);"></div>
+                        <span>GCP Services</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: linear-gradient(90deg, var(--primary), var(--secondary));"></div>
+                        <span>Inter-cloud Connections</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Network Topology Tab -->
+        <div id="network" class="tab-content">
+            <div class="diagram-container">
+                <h3>Network Architecture</h3>
+                <p>Detailed view of VPC configurations, subnets, and routing across cloud providers</p>
+                <!-- Network diagram content -->
+            </div>
+        </div>
+
+        <!-- Security Architecture Tab -->
+        <div id="security" class="tab-content">
+            <div class="diagram-container">
+                <h3>Security Implementation</h3>
+                <p>Security groups, IAM policies, and access control across multi-cloud environment</p>
+                <!-- Security diagram content -->
+            </div>
+        </div>
+
+        <!-- Data Flow Tab -->
+        <div id="data" class="tab-content">
+            <div class="diagram-container">
+                <h3>Data Flow & Migration</h3>
+                <p>Data movement patterns and migration paths between cloud services</p>
+                <!-- Data flow diagram content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel" id="infoPanel">
+        <button class="close-panel" onclick="closeInfoPanel()">×</button>
+        <div id="panelContent">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function showProviderDetails(provider) {
+            const providerData = {
+                aws: {
+                    title: 'Amazon Web Services Infrastructure',
+                    status: '100% Operational',
+                    details: [
+                        'VPC: 2 custom VPCs deployed',
+                        'EC2: 3 instances with auto-scaling',
+                        'RDS: MySQL database operational',
+                        'S3: Storage with versioning enabled',
+                        'Load Balancer: Application LB active'
+                    ],
+                    link: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/03-aws-deployment'
+                },
+                azure: {
+                    title: 'Microsoft Azure Infrastructure',
+                    status: '75% Operational',
+                    details: [
+                        'Resource Groups: Organized structure',
+                        'Cosmos DB: NoSQL database active',
+                        'Storage: Blob storage deployed',
+                        'VNet: Virtual network configured',
+                        'Pending: App Services (quota limits)'
+                    ],
+                    link: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/04-azure-deployment'
+                },
+                gcp: {
+                    title: 'Google Cloud Platform Infrastructure',
+                    status: '100% Operational',
+                    details: [
+                        'VPC: Custom network deployed',
+                        'GKE: 2-node Kubernetes cluster',
+                        'Compute Engine: VM instances',
+                        'Firewall: Security rules configured',
+                        'Storage: Cloud storage buckets'
+                    ],
+                    link: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/05-gcp-deployment'
+                }
+            };
+
+            const data = providerData[provider];
+            const content = `
+                <h3>${data.title}</h3>
+                <div style="background: var(--secondary); color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; margin: 10px 0;">
+                    ${data.status}
+                </div>
+                <h4>Deployed Services:</h4>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    ${data.details.map(detail => `<li style="margin: 8px 0;">${detail}</li>`).join('')}
+                </ul>
+                <a href="${data.link}" target="_blank" style="background: var(--primary); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; display: inline-block; margin-top: 15px;">
+                    View Documentation →
+                </a>
+            `;
+
+            document.getElementById('panelContent').innerHTML = content;
+            document.getElementById('infoPanel').classList.add('open');
+        }
+
+        function showServiceDetails(service) {
+            // Add service-specific details
+            console.log('Service details for:', service);
+        }
+
+        function closeInfoPanel() {
+            document.getElementById('infoPanel').classList.remove('open');
+        }
+
+        // Show connections on hover
+        document.querySelectorAll('.cloud-provider').forEach(provider => {
+            provider.addEventListener('mouseenter', () => {
+                document.querySelectorAll('.connection-line').forEach(line => {
+                    line.classList.add('active');
+                });
+            });
+            
+            provider.addEventListener('mouseleave', () => {
+                setTimeout(() => {
+                    document.querySelectorAll('.connection-line').forEach(line => {
+                        line.classList.remove('active');
+                    });
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
