@@ -548,6 +548,12 @@
                 <p>Multi-Cloud Infrastructure Operations Center | Amer Almohammad</p>
             </div>
             <div class="header-actions">
+		<div class="header-btn" onclick="openCostCalculator()">
+        	    <i class="fas fa-calculator"></i> Calculator
+    		</div>
+		<div class="header-btn" onclick="openArchitectureDiagrams()">
+        	    <i class="fas fa-project-diagram"></i> Architecture
+    		</div>
                 <div class="header-btn" onclick="refreshData()">
                     <i class="fas fa-sync-alt"></i> Refresh
                 </div>
@@ -814,11 +820,17 @@
 	function navigateToDeploy() {
    	 showDeploymentSummary();
 	}
-
+	
 	// Cost calculator function
 	function openCostCalculator() {
    	 window.open('cost-calculator.html', '_blank');
 	}
+
+	// Architecture diagrams function
+	function openArchitectureDiagrams() {
+ 	 window.open('architecture-diagrams.html', '_blank');
+	}
+
         // Navigation functions for cloud providers
         function navigateToAWS() {
             window.open('https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/03-aws-deployment', '_blank');
