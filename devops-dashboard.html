@@ -702,7 +702,7 @@
                             </div>
                             <span>RDS Database</span>
                         </div>
-                        <strong style="color: var(--secondary;">">1 Available</strong>
+                        <strong style="color: var(--secondary);">1 Available</strong>
                     </div>
                     <div class="resource-item" onclick="viewKubernetesDetails()">
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -743,40 +743,47 @@
                 </div>
             </div>
             <div class="timeline">
-                <div class="timeline-item">
+                <div class="timeline-item" onclick="showPhaseDetails('phase5')" style="cursor: pointer;">
                     <div class="timeline-dot online"></div>
                     <div>
                         <strong>Phase 5: GCP Deployment</strong> - September 5, 2025
                         <div style="opacity: 0.8; font-size: 0.9rem; margin-top: 5px;">
                             <i class="fas fa-check-circle" style="color: var(--secondary);"></i> Kubernetes cluster operational with 2 nodes
                         </div>
+                        <div style="font-size: 0.8rem; color: var(--primary); margin-top: 5px;">Click for detailed breakdown</div>
                     </div>
                 </div>
-                <div class="timeline-item">
+
+                <div class="timeline-item" onclick="showPhaseDetails('phase4')" style="cursor: pointer;">
                     <div class="timeline-dot online"></div>
                     <div>
                         <strong>Phase 4: Azure Deployment</strong> - September 5, 2025
                         <div style="opacity: 0.8; font-size: 0.9rem; margin-top: 5px;">
                             <i class="fas fa-check-circle" style="color: var(--secondary);"></i> Cosmos DB and storage accounts deployed
                         </div>
+                        <div style="font-size: 0.8rem; color: var(--primary); margin-top: 5px;">Click for detailed breakdown</div>
                     </div>
                 </div>
-                <div class="timeline-item">
+
+                <div class="timeline-item" onclick="showPhaseDetails('phase3')" style="cursor: pointer;">
                     <div class="timeline-dot online"></div>
                     <div>
                         <strong>Phase 3: AWS Deployment</strong> - September 5, 2025
                         <div style="opacity: 0.8; font-size: 0.9rem; margin-top: 5px;">
                             <i class="fas fa-check-circle" style="color: var(--secondary);"></i> Complete infrastructure with auto-scaling
                         </div>
+                        <div style="font-size: 0.8rem; color: var(--primary); margin-top: 5px;">Click for detailed breakdown</div>
                     </div>
                 </div>
-                <div class="timeline-item">
+
+                <div class="timeline-item" onclick="showPhaseDetails('phases12')" style="cursor: pointer;">
                     <div class="timeline-dot online"></div>
                     <div>
                         <strong>Phases 1-2: Foundation</strong> - September 3-4, 2025
                         <div style="opacity: 0.8; font-size: 0.9rem; margin-top: 5px;">
                             <i class="fas fa-check-circle" style="color: var(--secondary);"></i> Legacy assessment and migration strategy
                         </div>
+                        <div style="font-size: 0.8rem; color: var(--primary); margin-top: 5px;">Click for detailed breakdown</div>
                     </div>
                 </div>
             </div>
@@ -884,61 +891,128 @@
             alert('Settings panel - Coming soon in next portfolio update');
         }
 
-        // Add some interactive animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate progress bars
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0%';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, 500);
-            });
+        // Timeline navigation functions
+        function showPhaseDetails(phase) {
+            const phaseData = {
+                'phase5': {
+                    title: 'Phase 5: GCP Deployment',
+                    date: 'September 5, 2025',
+                    status: 'Complete',
+                    details: [
+                        'VPC Network: ecommerce-vpc operational',
+                        'Kubernetes Engine: 2-node cluster running',
+                        'Compute Engine: VM instances deployed',
+                        'Firewall Rules: SSH and web traffic configured'
+                    ],
+                    links: [
+                        { name: 'View GCP Documentation', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/05-gcp-deployment' },
+                        { name: 'Kubernetes Engine Details', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/05-gcp-deployment/kubernetes-engine' }
+                    ]
+                },
+                'phase4': {
+                    title: 'Phase 4: Azure Deployment',
+                    date: 'September 5, 2025',
+                    status: '75% Complete',
+                    details: [
+                        'Resource Groups: Multiple groups organized',
+                        'Cosmos DB: NoSQL database operational',
+                        'Storage Accounts: Blob storage deployed',
+                        'Virtual Networks: VNet with subnets configured'
+                    ],
+                    links: [
+                        { name: 'View Azure Documentation', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/04-azure-deployment' },
+                        { name: 'Cosmos DB Details', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/04-azure-deployment/cosmos-db' }
+                    ]
+                },
+                'phase3': {
+                    title: 'Phase 3: AWS Deployment',
+                    date: 'September 5, 2025',
+                    status: 'Complete',
+                    details: [
+                        'VPC: 2 custom VPCs with subnets',
+                        'EC2: 3 instances with auto-scaling',
+                        'RDS: MySQL database operational',
+                        'Load Balancer: Application LB active'
+                    ],
+                    links: [
+                        { name: 'View AWS Documentation', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/03-aws-deployment' },
+                        { name: 'Auto Scaling Details', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/03-aws-deployment/auto-scaling' }
+                    ]
+                },
+                'phases12': {
+                    title: 'Phases 1-2: Foundation',
+                    date: 'September 3-4, 2025',
+                    status: 'Complete',
+                    details: [
+                        'Legacy Assessment: Current state analysis',
+                        'Cost Analysis: Multi-cloud comparison',
+                        'Migration Strategy: Business case developed',
+                        'Risk Assessment: Mitigation matrix created'
+                    ],
+                    links: [
+                        { name: 'Legacy Assessment', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/01-legacy-assessment' },
+                        { name: 'Migration Strategy', url: 'https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-/tree/main/02-migration-strategy' }
+                    ]
+                }
+            };
 
-            // Update status indicators
-            const dots = document.querySelectorAll('.status-dot');
-            setInterval(() => {
-                dots.forEach(dot => {
-                    if (dot.classList.contains('online')) {
-                        dot.style.opacity = dot.style.opacity === '0.5' ? '1' : '0.5';
-                    }
-                });
-            }, 2000);
-            
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-8px)';
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
-            
-            // Simulate live data updates
-            setInterval(() => {
-                // Randomly update metrics for demo purposes
-                const metrics = document.querySelectorAll('.metric');
-                metrics.forEach(metric => {
-                    if (Math.random() > 0.7) {
-                        const currentValue = parseInt(metric.textContent);
-                        const newValue = Math.min(100, currentValue + Math.floor(Math.random() * 5) - 2);
-                        metric.textContent = newValue + '%';
-                        
-                        // Update color based on value
-                        if (newValue >= 90) {
-                            metric.style.color = 'var(--secondary)';
-                        } else if (newValue >= 75) {
-                            metric.style.color = 'var(--warning)';
-                        } else {
-                            metric.style.color = 'var(--danger)';
-                        }
-                    }
-                });
-            }, 5000);
-        });
+            const phaseInfo = phaseData[phase];
+            if (!phaseInfo) return;
+
+            const detailsHtml = phaseInfo.details.map(detail => `<li>${detail}</li>`).join('');
+            const linksHtml = phaseInfo.links.map(link => `<a href="${link.url}" target="_blank">${link.name} →</a>`).join('<br>');
+
+            const popup = window.open('', '_blank', 'width=600,height=500');
+            popup.document.write(`
+                <html>
+                    <head>
+                        <title>${phaseInfo.title} Details</title>
+                        <style>
+                            body { 
+                                font-family: 'Segoe UI', sans-serif; 
+                                padding: 30px; 
+                                background: #0f172a; 
+                                color: white; 
+                                line-height: 1.6;
+                            }
+                            h1 { color: #6366f1; margin-bottom: 10px; }
+                            .status { 
+                                background: #10b981; 
+                                color: white; 
+                                padding: 5px 15px; 
+                                border-radius: 20px; 
+                                display: inline-block; 
+                                margin-bottom: 20px;
+                                font-size: 0.9rem;
+                            }
+                            ul { padding-left: 20px; margin: 20px 0; }
+                            li { margin: 8px 0; }
+                            a { 
+                                color: #6366f1; 
+                                text-decoration: none; 
+                                display: inline-block;
+                                margin: 5px 0;
+                                padding: 8px 16px;
+                                background: rgba(99, 102, 241, 0.1);
+                                border-radius: 8px;
+                                transition: background 0.3s ease;
+                            }
+                            a:hover { background: rgba(99, 102, 241, 0.2); }
+                            .date { opacity: 0.8; margin-bottom: 20px; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${phaseInfo.title}</h1>
+                        <div class="date">${phaseInfo.date}</div>
+                        <div class="status">Status: ${phaseInfo.status}</div>
+                        <h3>Implementation Details:</h3>
+                        <ul>${detailsHtml}</ul>
+                        <h3>Documentation Links:</h3>
+                        <div>${linksHtml}</div>
+                    </body>
+                </html>
+            `);
+        }
     </script>
 </body>
 </html>
