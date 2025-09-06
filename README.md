@@ -94,66 +94,68 @@ CloudMigrate-Pro/
 ├── cost-calculator.html        # Multi-cloud cost comparison tool
 ├── architecture-diagrams.html  # Visual architecture components
 └── index.html                  # Portfolio landing page
+Key Differentiators
+Real Infrastructure vs. Theoretical Knowledge
+Operational auto-scaling groups responding to load
 
-## Key Differentiators
+Working databases with actual data
 
-### Real Infrastructure vs. Theoretical Knowledge
-Unlike portfolios showing only documentation, this project demonstrates:
-- Operational auto-scaling groups responding to load
-- Working databases with actual data
-- Live Kubernetes clusters processing requests
-- Functional load balancers distributing traffic
+Live Kubernetes clusters processing requests
 
-### Business-Focused Solutions Architecture
-- Cost analysis with real pricing data
-- Executive-level business cases and ROI calculations
-- Risk assessment and mitigation strategies
-- Stakeholder communication frameworks
+Functional load balancers distributing traffic
 
-### Professional Security Practices
-- All sensitive data properly masked
-- Least-privilege access implementations
-- Network isolation and segmentation
-- Encryption at rest and in transit
+Business-Focused Solutions Architecture
+Cost analysis with real pricing data
 
-## Technologies Demonstrated
+Executive-level business cases and ROI calculations
 
-**Cloud Platforms**: AWS, Microsoft Azure, Google Cloud Platform
-**Infrastructure**: VPC, Subnets, Security Groups, Load Balancers, Auto Scaling
-**Compute**: EC2, Azure VMs, GCE, Kubernetes (GKE)
-**Storage**: S3, Azure Blob Storage, Cloud Storage
-**Databases**: RDS (MySQL), Cosmos DB, Cloud SQL
-**Networking**: Multi-cloud connectivity, DNS management, CDN
-**Security**: IAM, RBAC, Network ACLs, Encryption
-**DevOps**: CI/CD pipelines, Infrastructure as Code, Monitoring
-**Development**: HTML5, CSS3, JavaScript, Interactive Dashboards
+Risk assessment and mitigation strategies
 
-## Setup Instructions
+Stakeholder communication frameworks
 
-Detailed setup guide available in [SETUP-GUIDE.md](./SETUP-GUIDE.md) for replicating this portfolio.
+Professional Security Practices
+All sensitive data properly masked
 
-**Estimated Monthly Cost**: ~$102 across all three cloud providers (optimized for demonstration purposes)
+Least-privilege access implementations
 
-## Professional Value
+Network isolation and segmentation
 
-This portfolio demonstrates:
-1. **Hands-on Experience**: Real infrastructure deployment and management
-2. **Business Acumen**: Cost analysis and executive communication
-3. **Technical Communication**: Visual architecture and documentation
-4. **Problem-Solving**: Working within cloud provider limitations
-5. **Security Awareness**: Proper data masking and access controls
-6. **Project Management**: Systematic 23-phase implementation approach
+Encryption at rest and in transit
 
-## Contact & Usage
+Technologies Demonstrated
+Cloud Platforms: AWS, Microsoft Azure, Google Cloud Platform
+Infrastructure: VPC, Subnets, Security Groups, Load Balancers, Auto Scaling
+Compute: EC2, Azure VMs, GCE, Kubernetes (GKE)
+Storage: S3, Azure Blob Storage, Cloud Storage
+Databases: RDS (MySQL), Cosmos DB, Cloud SQL
+Networking: Multi-cloud connectivity, DNS management, CDN
+Security: IAM, RBAC, Network ACLs, Encryption
+DevOps: CI/CD pipelines, Infrastructure as Code, Monitoring
+Development: HTML5, CSS3, JavaScript, Interactive Dashboards
 
-Portfolio created by: **Amer Almohammad**
+Setup Instructions
+Detailed setup guide available in SETUP-GUIDE.md for replicating this portfolio.
+
+Estimated Monthly Cost: ~$102 across all three cloud providers (optimized for demonstration purposes)
+
+Professional Value
+Hands-on Experience: Real infrastructure deployment and management
+
+Business Acumen: Cost analysis and executive communication
+
+Technical Communication: Visual architecture and documentation
+
+Problem-Solving: Working within cloud provider limitations
+
+Security Awareness: Proper data masking and access controls
+
+Project Management: Systematic 23-phase implementation approach
+
+Contact & Usage
+Portfolio created by: Amer Almohammad
 Purpose: Solutions Architect skill demonstration
-GitHub: https://github.com/AJ-Almohammad/Enterprise-Cloud-Solutions-Portfolio-Demo-
-**Date**: 2025-09-03  
-**Status**: Active Development
----
-*This portfolio represents demo/real  working infrastructure across multiple cloud providers, demonstrating practical Solutions Architect capabilities beyond theoretical knowledge.*
+GitHub: Enterprise-Cloud-Solutions-Portfolio-Demo
+Date: 2025-09-03
+Status: Active Development
 
-
-
-
+This portfolio represents demo/real working infrastructure across multiple cloud providers, demonstrating practical Solutions Architect capabilities beyond theoretical knowledge.
