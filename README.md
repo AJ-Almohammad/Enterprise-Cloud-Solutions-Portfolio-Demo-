@@ -54,7 +54,7 @@ Visual representation of multi-cloud infrastructure with clickable components. I
 
 ## Project Structure
 
-CloudMigrate-Pro/
+'''CloudMigrate-Pro/
 ├── 01-legacy-assessment/          # Current state analysis and cost comparison
 ├── 02-migration-strategy/         # Business case and technical strategy
 ├── 03-aws-deployment/            # Complete AWS infrastructure
@@ -81,7 +81,7 @@ CloudMigrate-Pro/
 ├── devops-dashboard.html       # Interactive operations dashboard
 ├── cost-calculator.html        # Multi-cloud cost comparison tool
 ├── architecture-diagrams.html  # Visual architecture components
-└── index.html                 # Portfolio landing page
+└── index.html                 # Portfolio landing page'''
 
 ## Key Differentiators
 
