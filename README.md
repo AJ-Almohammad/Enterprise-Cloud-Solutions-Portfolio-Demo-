@@ -52,36 +52,37 @@ Visual representation of multi-cloud infrastructure with clickable components. I
 - **Networking**: Firewall rules and load balancing
 - **Analytics**: BigQuery integration for data processing
 
-## Project Structure
+# Project Structure
 
 CloudMigrate-Pro/
-├── 01-legacy-assessment/          # Current state analysis and cost comparison
-├── 02-migration-strategy/         # Business case and technical strategy
-├── 03-aws-deployment/            # Complete AWS infrastructure
-├── 04-azure-deployment/          # Azure services with constraints documentation
-├── 05-gcp-deployment/            # GCP Kubernetes and compute services
-├── 06-infrastructure-as-code/    # Terraform templates and automation
-├── 07-application-development/   # Microservices and containerization
-├── 08-devops-pipeline/          # CI/CD and testing frameworks
-├── 09-data-analytics/           # Data lake and analytics architecture
-├── 10-machine-learning/         # ML pipelines and model deployment
-├── 11-networking-solutions/     # Multi-cloud connectivity
-├── 12-security-implementation/  # IAM, encryption, and compliance
-├── 13-storage-architecture/     # Multi-tier storage and DR
-├── 14-containerization/         # Docker and Kubernetes orchestration
-├── 15-serverless-solutions/     # Function-as-a-Service implementations
-├── 16-migration-execution/      # Migration strategies and testing
-├── 17-it-transformation/        # Digital transformation frameworks
-├── 18-customer-engagement/      # Stakeholder management processes
-├── 19-poc-mvp-development/      # Proof of concept demonstrations
-├── 20-business-strategy/        # Cloud economics and ROI analysis
-├── 21-certifications-prep/      # Professional development materials
+├── 01-legacy-assessment/       # Current state analysis and cost comparison
+├── 02-migration-strategy/      # Business case and technical strategy
+├── 03-aws-deployment/          # Complete AWS infrastructure
+├── 04-azure-deployment/        # Azure services with constraints documentation
+├── 05-gcp-deployment/          # GCP Kubernetes and compute services
+├── 06-infrastructure-as-code/  # Terraform templates and automation
+├── 07-application-development/ # Microservices and containerization
+├── 08-devops-pipeline/         # CI/CD and testing frameworks
+├── 09-data-analytics/          # Data lake and analytics architecture
+├── 10-machine-learning/        # ML pipelines and model deployment
+├── 11-networking-solutions/    # Multi-cloud connectivity
+├── 12-security-implementation/ # IAM, encryption, and compliance
+├── 13-storage-architecture/    # Multi-tier storage and DR
+├── 14-containerization/        # Docker and Kubernetes orchestration
+├── 15-serverless-solutions/    # Function-as-a-Service implementations
+├── 16-migration-execution/     # Migration strategies and testing
+├── 17-it-transformation/       # Digital transformation frameworks
+├── 18-customer-engagement/     # Stakeholder management processes
+├── 19-poc-mvp-development/     # Proof of concept demonstrations
+├── 20-business-strategy/       # Cloud economics and ROI analysis
+├── 21-certifications-prep/     # Professional development materials
 ├── 22-documentation/           # Technical documentation standards
 ├── 23-portfolio-materials/     # Case studies and presentations
 ├── devops-dashboard.html       # Interactive operations dashboard
 ├── cost-calculator.html        # Multi-cloud cost comparison tool
 ├── architecture-diagrams.html  # Visual architecture components
-└── index.html                 # Portfolio landing page
+└── index.html                  # Portfolio landing page
+
 
 ## Key Differentiators
 
